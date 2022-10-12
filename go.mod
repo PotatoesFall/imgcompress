@@ -1,4 +1,4 @@
-module temp
+module github.com/PotatoesFall/imgcompress
 
 go 1.19
 
