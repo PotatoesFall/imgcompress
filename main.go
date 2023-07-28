@@ -22,8 +22,13 @@ func main() {
 
 	compressedFolder := path.Join(os.Args[1], `compressed`)
 
-	if err := os.Mkdir(compressedFolder, os.ModeDir); err != nil {
-		panic(err)
+	stat, err := os.Stat(compressedFolder)
+	if err != nil {
+		if err := os.Mkdir(compressedFolder, 0o777); err != nil {
+			panic(err)
+		}
+	} else if !stat.IsDir() {
+		panic(fmt.Errorf("folder %q: is already a file, should be folder", compressedFolder))
 	}
 
 	threads := make(chan struct{})
